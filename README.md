@@ -1,39 +1,42 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+HTTP Requests Package Inspired By Python Requests Module Which Is Used For To Make HTTP Request And Get Response You Can Use It In Rest API
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+## Install
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
+Add this to your package's pubspec.yaml file:
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  http_requests: ^0.0.1
 ```
 
-## Additional information
+## Usage
+Start by importing the library
+```dart
+import 'package:http_requests/http_requests.dart';
+```
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+Let's make a simple HTTP request
+
+```dart
+var r = HttpRequests();
+await r.get('https://google.com');
+print(r.status());
+```
+
+
+### Some Methods
+just like in python's request module, the `Response` object has this functionallity
+
+- `r.status` - the response status code
+- `r.url` - the url in the request 
+- `r.headers` - the response headers 
+- `r.success` - a boolean. `true` indicates that the request was a great success 
+- `r.hasError` - a boolean. `true` indicates that the request was not a great success 
+- `r.bytes` - return the body in the respone as a list of bytes 
+- `r.content` - return the body in the respone as a string (with UTF-8)
+- `r.contentLength` - return the response content lenght
+- `r.contentType` - return the response content type `application/json`, 
+- `r.isRedirect` - return the Redirection Status is `true` or `false`
+- `r.response` - return the body in the respone as a string (without UTF-8 {take default})
+- `r.json` - recodes the body in the respone and returns the result (dynamic type)
+- `r.throwForStatus()` - will throw an exception if the response `statusCode` is not a great success.
