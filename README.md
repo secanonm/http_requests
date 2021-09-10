@@ -34,10 +34,10 @@ just like in python's request module, the `Response` object has this functionall
 - `r.success` - a boolean. `true` indicates that the request was a great success 
 - `r.hasError` - a boolean. `true` indicates that the request was not a great success 
 - `r.bytes` - return the body in the respone as a list of bytes 
-- `r.content` - return the body in the respone as a string (with UTF-8)
 - `r.contentLength` - return the response content lenght
 - `r.contentType` - return the response content type `application/json`, 
 - `r.isRedirect` - return the Redirection Status is `true` or `false`
+- `r.content` - return the body in the respone as a string (with UTF-8)
 - `r.response` - return the body in the respone as a string (without UTF-8 {take default})
 - `r.json` - recodes the body in the respone and returns the result (dynamic type)
 - `r.throwForStatus()` - will throw an exception if the response `statusCode` is not a great success.
