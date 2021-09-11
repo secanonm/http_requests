@@ -3,11 +3,17 @@ library http_requests;
 import 'dart:convert' as convert;
 import 'package:http/http.dart' as http;
 
-class HttpRequest {
-  dynamic _kresponse;
-  dynamic _url ;
-  dynamic param;
-  Future post(String url ,{dynamic headers , dynamic data}) async{
+late http.Response _kresponse;
+dynamic _url ;
+dynamic param;
+class HttpRequests {
+
+  static Future def(var val) async{
+    _kresponse = val;
+    Response _kponse  = Response() ;
+    return _kponse;
+  }  
+  static post(String url ,{dynamic headers , dynamic data}) async{
     _url = Uri.parse(url);
     dynamic _param = data ?? {};
     Map<String,String> tempHeader = {
@@ -15,11 +21,11 @@ class HttpRequest {
     };
     Map<dynamic,dynamic> _head = headers ?? tempHeader;
     Map<String, String> _header =  _head as Map<String, String> ;
-    var response = await http.post(_url, body: _param , headers: _header);
-    _kresponse = response;
+    http.Response response = await http.post(_url, body: _param , headers: _header);
+    return await def(response);
   }
-  get(String url , {dynamic headers}) async{
-    _url = Uri.parse(url);
+  static get(String url , {dynamic headers}) async{
+    var _url = Uri.parse(url);
     Map<String,String> tempHeader = {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.7113.93'
     };
@@ -27,8 +33,15 @@ class HttpRequest {
 
     Map<String, String> _header =  _head as Map<String, String> ;
 
-    var response = await http.get(_url, headers: _header);
-    _kresponse =  response;
+    http.Response response = await http.get(_url, headers: _header);
+    return await def(response);
+  }  
+}
+
+
+class Response{
+  test(){
+    return "test !";
   }  
   bool get hasError => (400 <= _kresponse.statusCode) && (_kresponse.statusCode < 600);
   bool get success => !hasError;
@@ -37,10 +50,11 @@ class HttpRequest {
   String get contentType => _kresponse.headers['content-type'] ?? "unknow";
   String get content=>convert.utf8.decode(bytes, allowMalformed: true);
   Map<String, dynamic> get json =>  convert.jsonDecode(_kresponse.body) as Map<String, dynamic>;
-  get headers => _kresponse.headers as Map<String, dynamic> ;
+  // ignore: unnecessary_cast
+  get headers => _kresponse.headers as Map<String, dynamic>;
   get response => _kresponse.body;
   get contentLength => _kresponse.contentLength;
-  get isRedirecat => _kresponse.isRedirecat;
+  get isRedirect => _kresponse.isRedirect;
   List<int> get bytes => _kresponse.bodyBytes;
   void throwForStatus() {
       if (!success) {
@@ -51,9 +65,10 @@ class HttpRequest {
 }
 
 
+
+
 class HTTPException implements Exception {
   final String message;
   final http.Response response;
-
   HTTPException(this.message, this.response);
 }
