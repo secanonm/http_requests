@@ -1,5 +1,5 @@
 # HTTP Requests
-HTTP Requests Package Inspired By Python Requests Module Which Is Used For To Make HTTP Request And Get Response You Can Use It In Rest API
+HTTP Requests Package Inspired By `Python Requests Module` Which Is Used For To Make HTTP Request And Get Response You Can Use It In `Rest API`
 
 ## Install
 
@@ -7,7 +7,7 @@ Add this to your package's pubspec.yaml file:
 
 ```yaml
 dependencies:
-  http_requests: ^0.0.1
+  http_requests: ^0.0.3
 ```
 
 ## Usage
@@ -19,9 +19,8 @@ import 'package:http_requests/http_requests.dart';
 Let's make a simple HTTP request
 
 ```dart
-var r = HttpRequests();
-await r.get('https://google.com');
-print(r.status());
+Response r = await HttpRequests.get('https://google.com');
+print(r.status);
 ```
 
 
